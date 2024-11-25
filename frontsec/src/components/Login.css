@@ -1,0 +1,113 @@
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  height: 100vh;
+  font-family: 'Canva Sans', sans-serif; /* Tipografía */
+}
+
+/* Columna izquierda */
+.login-left {
+  flex: 1;
+  background-color: #6998ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Logo */
+.login-logo {
+  width: 400px; /* Incrementado el tamaño del logo */
+  margin-bottom: 30px;
+}
+
+/* Imagen decorativa */
+.login-image {
+  width: 90%; /* Imagen más grande */
+  max-width: 400px; /* Ajuste máximo */
+  margin-top: 20px;
+}
+
+/* Columna derecha */
+.login-right {
+  flex: 1;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+h2 {
+  margin-bottom: 30px; /* Espaciado mayor */
+  color: #333;
+  font-size: 45px; /* Tamaño de letra incrementado */
+}
+
+/* Formulario */
+form {
+  width: 100%; /* Ajusta al tamaño de la columna */
+  max-width: 400px; /* Tamaño máximo de los cuadros */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra los cuadros */
+}
+
+/* Campos de entrada */
+input {
+  width: 100%; /* Se asegura que todos los cuadros tengan el mismo ancho */
+  padding: 15px; /* Incrementado el padding */
+  margin: 12px 0; /* Más espaciado entre campos */
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 24px; /* Incrementado tamaño de fuente */
+  box-sizing: border-box; /* Asegura que el padding no cambie el ancho */
+}
+
+/* Contraseña con botón de mostrar/ocultar */
+.password-input {
+  position: relative;
+  width: 100%; /* Asegura el ancho del contenedor */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px; /* Tamaño de ícono */
+}
+
+/* Botón de inicio de sesión */
+.login-button {
+  width: 100%; /* Botón alineado al mismo tamaño */
+  padding: 15px; /* Incrementado el padding */
+  background-color: #6998ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 18px; /* Tamaño de fuente del botón */
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #357ab7;
+}
+
+/* Enlace para registrarse */
+.link-button {
+  background: none;
+  border: none;
+  color: #6998ff;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 16px; /* Incrementado tamaño */
+  font-weight: bold;
+  padding: 0;
+}
