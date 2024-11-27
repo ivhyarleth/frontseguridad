@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Login.css";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
@@ -12,18 +13,30 @@ function Login() {
     e.preventDefault();
     // Simulación de validación de credenciales
     if (email && password) {
-      const response = await axios.post("http://localhost:5000/")
-      console.log('Correo:', email);
-      console.log('Contraseña:', password);
-      alert('Inicio de sesión exitoso');
-      navigate('/dashboard'); // Redirige al Dashboard
+      await axios
+        .post("http://localhost:5000/login", {
+          username: email,
+          password,
+        })
+        .then((response) => {
+          console.log(response);
+          // Guardar el token en localStorage
+          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("user", response.data.username);
+          navigate("/dashboard");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Credenciales incorrecta");
+          //navigate("/dashboard");
+        });
     } else {
-      alert('Por favor, completa todos los campos.');
+      alert("Por favor, completa todos los campos.");
     }
   };
 
   const handleRegister = () => {
-    navigate('/register'); // Navega a la página de registro
+    navigate("/register"); // Navega a la página de registro
   };
 
   return (
@@ -31,7 +44,11 @@ function Login() {
       {/* Columna izquierda con el color azul y las imágenes */}
       <div className="login-left">
         <img src="/logo_login.jpg" alt="Logo" className="login-logo" />
-        <img src="/imagen_login.jpg" alt="Imagen decorativa" className="login-image" />
+        <img
+          src="/imagen_login.jpg"
+          alt="Imagen decorativa"
+          className="login-image"
+        />
       </div>
 
       {/* Columna derecha con el formulario */}
@@ -47,7 +64,7 @@ function Login() {
           />
           <div className="password-input">
             <input
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               placeholder="Contraseña maestra"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -58,13 +75,15 @@ function Login() {
               className="toggle-password"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? '🙈' : '👁️'}
+              {showPassword ? "🙈" : "👁️"}
             </button>
           </div>
-          <button type="submit" className="login-button">Iniciar sesión</button>
+          <button type="submit" className="login-button">
+            Iniciar sesión
+          </button>
         </form>
         <p className="forgot-password">
-          ¿Todavía no tienes una cuenta?{' '}
+          ¿Todavía no tienes una cuenta?{" "}
           <button onClick={handleRegister} className="link-button">
             Regístrate
           </button>

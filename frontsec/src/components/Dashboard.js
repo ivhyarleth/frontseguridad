@@ -1,76 +1,96 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Dashboard.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Dashboard.css";
 
 function Dashboard() {
   const navigate = useNavigate();
-
-  // Datos simulados para las tarjetas
-  const websites = [
-    {
-      website: 'www.amazon.com',
-      email: 'usuario@gmail.com',
-      password: '****************',
-    },
-    {
-      website: 'www.facebook.com',
-      email: 'usuario@outlook.com',
-      password: '****************',
-    },
-    {
-      website: 'www.instagram.com',
-      email: 'usuario@gmail.com',
-      password: '****************',
-    },
-  ];
-
+  const [websites, setWebsites] = React.useState([]);
+  const [usuario, setUsuario] = React.useState("");
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    navigate("/");
+  };
+  React.useEffect(() => {
+    const fetchWebsites = async () => {
+      const usuario = localStorage.getItem("user");
+      const token = localStorage.getItem("token") || "";
+      console.log(usuario);
+      console.log(token);
+      await axios
+        .post(
+          "http://localhost:5000/passwords",
+          { username: usuario },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          console.log("Reponse: ", response.data);
+          setWebsites(response.data);
+          setUsuario(localStorage.getItem("user"));
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+            navigate("/");
+          } else {
+            navigate("/");
+          }
+        });
+    };
+    fetchWebsites();
+  }, []);
   return (
     <div className="dashboard-container">
       {/* Fila fija: logo y saludo */}
       <header className="dashboard-header">
         <img src="/login_principal.jpg" alt="Logo" className="dashboard-logo" />
-        <h2>¡Bienvenido USUARIO!</h2>
+        <h2>¡Bienvenido {usuario}!</h2>
+        <button onClick={handleLogout}>Logout</button>
       </header>
 
       {/* Contenido principal: dividido en dos partes */}
       <div className="dashboard-main">
         {/* Botones de navegación */}
         <aside className="dashboard-sidebar">
-          <button
-            className="sidebar-button active"
-          >
-            WEBSITES
-          </button>
+          <button className="sidebar-button active">WEBSITES</button>
           <button
             className="sidebar-button"
-            onClick={() => navigate('/password-generator')}
+            onClick={() => navigate("/password-generator")}
           >
             PASSWORD GENERATOR
           </button>
         </aside>
 
         {/* Tarjetas */}
-        <div className="dashboard-content">
-          {websites.map((site, index) => (
-            <div className="website-card" key={index}>
-              <div className="website-info">
-                <i className="fas fa-globe"></i>
-                <p>{site.website}</p>
+        {websites.length && (
+          <div className="dashboard-content">
+            {websites.map((site, index) => (
+              <div className="website-card" key={index}>
+                <div className="website-info">
+                  <i className="fas fa-globe"></i>
+                  <p>{site.website}</p>
+                </div>
+                <div className="website-info">
+                  <i className="fas fa-user"></i>
+                  <p>{site.email}</p>
+                </div>
+                <div className="website-info">
+                  <i className="fas fa-lock"></i>
+                  <p>{site.password}</p>
+                </div>
+                <div className="website-action">
+                  <i className="fas fa-share"></i>
+                </div>
               </div>
-              <div className="website-info">
-                <i className="fas fa-user"></i>
-                <p>{site.email}</p>
-              </div>
-              <div className="website-info">
-                <i className="fas fa-lock"></i>
-                <p>{site.password}</p>
-              </div>
-              <div className="website-action">
-                <i className="fas fa-share"></i>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
