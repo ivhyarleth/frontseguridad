@@ -8,10 +8,11 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     // Simulación de validación de credenciales
     if (email && password) {
+      const response = await axios.post("http://localhost:5000/")
       console.log('Correo:', email);
       console.log('Contraseña:', password);
       alert('Inicio de sesión exitoso');
