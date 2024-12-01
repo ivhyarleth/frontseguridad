@@ -14,7 +14,7 @@ function Login() {
     // Simulación de validación de credenciales
     if (email && password) {
       await axios
-        .post("http://localhost:5000/login", {
+        .post("http://localhost:5000/auth/login", {
           username: email,
           password,
         })
