@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Register.css";
 
@@ -8,6 +9,7 @@ function Register() {
   const [username, setUsername] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate(); 
 
   const checkPasswordStrength = () => {
     if (password.length > 10) return "Fuerte";
@@ -26,16 +28,18 @@ function Register() {
       })
       .then((response) => {
         alert("¡Registro exitoso!");
+        navigate("/"); //login
       })
       .catch((error) => {
         alert("Error en el registro.");
       });
-    console.log("Correo:", email);
-    console.log("Contraseña:", password);
-    console.log("Nombre de usuario:", username);
-    console.log("Color seleccionado:", selectedColor);
-    alert("¡Registro exitoso!");
   };
+
+  console.log("Correo:", email);
+  console.log("Contraseña:", password);
+  console.log("Nombre de usuario:", username);
+  console.log("Color seleccionado:", selectedColor);
+  alert("¡Registro exitoso!");
 
   return (
     <div className="register-container">
