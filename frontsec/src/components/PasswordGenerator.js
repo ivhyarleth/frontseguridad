@@ -14,19 +14,19 @@ function PasswordGenerator() {
   };
   React.useEffect(() => {
     const handleToken = async () => {
-      const token = localStorage.getItem("token") || "";
+      const token = JSON.parse(localStorage.getItem("token"));
       if (!token) {
         navigate("/");
       }
       axios
-        .get("http://localhost:5000/validate", {
+        .get("http://localhost:5000/passwords/validate", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then((response) => {
           console.log(response);
-          setUsuario(localStorage.getItem("user"));
+          setUsuario(JSON.parse(localStorage.getItem("user")));
           generatePassword();
         })
         .catch((error) => {

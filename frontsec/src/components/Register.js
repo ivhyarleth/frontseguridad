@@ -33,13 +33,14 @@ function Register() {
       .catch((error) => {
         alert("Error en el registro.");
       });
+      console.log("Correo:", email);
+      console.log("Contraseña:", password);
+      console.log("Nombre de usuario:", username);
+      console.log("Color seleccionado:", selectedColor);
+      //alert("¡Registro exitoso!");
   };
 
-  console.log("Correo:", email);
-  console.log("Contraseña:", password);
-  console.log("Nombre de usuario:", username);
-  console.log("Color seleccionado:", selectedColor);
-  alert("¡Registro exitoso!");
+ 
 
   return (
     <div className="register-container">

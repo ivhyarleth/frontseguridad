@@ -21,8 +21,8 @@ function Login() {
         .then((response) => {
           console.log(response);
           // Guardar el token en localStorage
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("user", response.data.username);
+          localStorage.setItem("token", JSON.stringify(response.data.token));
+          localStorage.setItem("user", JSON.stringify(response.data.username));
           navigate("/dashboard");
         })
         .catch((error) => {
